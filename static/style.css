@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fb;
+}
+
+/* NAVBAR */
+.navbar {
+    background: white;
+    padding: 15px 0;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.logo span {
+    color: #4e73df;
+}
+
+.nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #4e73df;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.hero span {
+    color: #4e73df;
+}
+
+.subtitle {
+    margin-top: 10px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 14px 28px;
+    background: #4e73df;
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #3b5cc6;
+    transform: translateY(-2px);
+}
+
+/* CARD */
+.card {
+    background: white;
+    max-width: 480px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+    text-align: center;
+}
+
+.file-label {
+    display: block;
+    background: #eef1fb;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #4e73df;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.file-label i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.file-label input {
+    display: none;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #e2e6f0;
+    color: #333;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* QUIZ CARDS */
+.quiz-card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.quiz-title {
+    text-align: center;
+    margin-bottom: 30px;
+}

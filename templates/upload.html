@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <h2>Téléversez votre document PDF</h2>
+    <p class="desc">Nous allons analyser le contenu et générer un quiz intelligent.</p>
+
+    {% if error %}
+        <div class="alert">{{ error }}</div>
+    {% endif %}
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label class="file-label">
+            <i class="bi bi-file-earmark-pdf"></i>
+            <span>Choisir un fichier PDF</span>
+            <input type="file" name="pdf_file" accept="application/pdf" required>
+        </label>
+
+        <button class="btn-primary" type="submit">
+            Générer le Quiz
+        </button>
+    </form>
+</div>
+
+{% endblock %}

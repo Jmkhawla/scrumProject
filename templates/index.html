@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz App Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   <style>
+        :root {
+            /* Palette plus claire */
+            --background-color: #c8fafff3; /* Gris très clair / presque blanc */
+            --container-color: #e4fdfff3; /* Conteneurs blancs */
+            
+            /* Couleurs d'accent (conservées pour le style du logo) */
+            --primary-color: #1A75FF; /* Bleu vif pour l'action principale */
+            --secondary-color: #2ECC71; /* Vert pour l'accentuation */
+            
+            /* Couleurs de texte ajustées pour un fond clair */
+            --text-color: #2c3e50; /* Texte principal très sombre */
+            --secondary-text: #7f8c8d; /* Texte secondaire / placeholders */
+            --danger-color: #e74c3c;
+        }
+
+        body { 
+            margin:0; 
+            font-family:'Inter', sans-serif; 
+            background:var(--background-color); 
+            color:var(--text-color); 
+            min-height: 100vh;
+        }
+
+        a { 
+            color:var(--text-color); 
+            text-decoration:none; 
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: var(--container-color); /* Header blanc */
+            border-bottom: 1px solid #dfe6e9; /* Ligne de séparation légère */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Ombre légère */
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Section gauche */
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        /* Titre (Ne change pas pour garder le style du logo) */
+        .site-title {
+            font-size: 32px; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+
+            /* Dégradé du bleu au vert */
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Style optionnel pour le sous-titre si vous séparez les mots */
+        .site-title span {
+            display: block;
+            font-size: 18px; 
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 2px;
+            color: var(--secondary-color);
+        }
+
+        /* Section droite */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color); /* Le lien sera sombre sur fond clair */
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .lang-btn {
+            background: var(--primary-color);
+            color: white; /* Texte blanc sur bouton bleu */
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: #1660d0; /* Légèrement plus foncé */
+        }
+
+        /* --- Main Container --- */
+        .main-container {
+            width:90%;
+            max-width:900px;
+            margin:40px auto;
+            background:var(--container-color);
+            padding:40px;
+            border-radius:15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombre plus douce */
+        }
+
+        /* --- File Upload (Drag & Drop) --- */
+        label.file-label {
+            background: #f8f9fa; /* Fond très clair pour la zone de dépôt */
+            color:var(--secondary-text);
+            height:200px;
+            border-radius:15px;
+            border:2px dashed var(--secondary-text);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            font-size:18px;
+            cursor:pointer;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        
+        label.file-label:hover {
+            border-color: var(--primary-color);
+            background: #f0f2f5; /* Légèrement grisé au survol */
+        }
+
+        /* Couleur de l'icône de téléchargement */
+        label.file-label div {
+            color: var(--secondary-text);
+        }
+        
+        #fileInput { display: none; }
+
+        /* --- Uploaded Section --- */
+        .pdf-item {
+            background: #ecf0f1; /* Gris clair pour l'élément PDF */
+            border: 1px solid #bdc3c7; /* Bordure plus visible */
+            padding:15px 20px;
+            border-radius:12px;
+            margin-top:20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-weight: 500;
+            color: var(--text-color); /* Texte sombre */
+        }
+
+        .pdf-item strong { color: var(--primary-color); }
+
+        /* --- Boutons --- */
+        .btn {
+            padding:10px 20px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            border:none;
+            cursor:pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn-generate {
+            background:var(--secondary-color); /* Changé en Vert (secondary) */
+            color:white; /* Texte blanc sur bouton vert */
+        }
+        .btn-generate:hover:not(:disabled) { background: #27ae60; transform: translateY(-1px); }
+        .btn-generate:disabled { background: #bdc3c7; color: white; cursor: not-allowed; }
+
+        .btn-delete {
+            background:var(--danger-color);
+            color:white;
+        }
+        .btn-delete:hover { background: #c0392b; }
+
+        /* --- Quiz Container --- */
+        #quizContainer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dfe6e9;
+        }
+
+        .quiz-question {
+            background: #f8f9fa; /* Fond très clair pour chaque question */
+            padding:20px;
+            margin-bottom:25px;
+            border-radius:10px;
+            border: 1px solid #ecf0f1; /* Bordure subtile */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color); /* Question en noir (plus lisible) */
+        }
+
+        .choices-list { list-style: none; padding: 0; margin: 0; }
+        .choice-item { margin-bottom: 10px; }
+        .choice-label {
+            display: block;
+            background: var(--container-color);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #dfe6e9; /* Ajout d'une bordure fine pour définir les choix */
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .choice-label:hover { 
+            background: #f0f2f5; 
+            border-color: #bdc3c7;
+        }
+        .choice-input { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <span class="site-title">Quiz App Generator</span>
+    </div>
+    <div class="header-right">
+        <nav class="nav-links">
+            <a href="/">Accueil</a>
+        </nav>
+        <button class="lang-btn">FR</button>
+    </div>
+</div>
+
+<div class="main-container">
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label class="file-label" for="fileInput">
+            <div style="font-size:40px;">⭳</div>
+            <p>Importer un fichier PDF</p>
+            <small>Glissez-déposez ou cliquez pour parcourir</small>
+            <input type="file" id="fileInput" name="file" accept="application/pdf">
+        </label>
+    </form>
+
+    <div id="uploadedSection" class="pdf-item" style="display:none;">
+        <div>
+            <strong id="uploadedFileName"></strong><br>
+            <small>PDF importé avec succès</small>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button id="generateBtn" class="btn btn-generate">Générer le Quiz</button>
+            <a href="/delete" class="btn btn-delete">Retirer</a> 
+        </div>
+    </div>
+
+    <div id="quizContainer"></div>
+</div>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const uploadedSection = document.getElementById("uploadedSection");
+const uploadedFileName = document.getElementById("uploadedFileName");
+const generateBtn = document.getElementById("generateBtn");
+const quizContainer = document.getElementById("quizContainer");
+
+// --- Affiche le quiz depuis l'objet JSON ---
+function displayQuiz(quizData) {
+    quizContainer.innerHTML = '';
+    if (!quizData.questions || !quizData.questions.length) {
+        quizContainer.innerHTML = `<p style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim()};">Aucune question trouvée dans le JSON.</p>`;
+        return;
+    }
+
+    quizData.questions.forEach((q, idx) => {
+        const quizHTML = `
+            <article class="quiz-question" data-correct-answer="${q.answer}">
+                <p class="question-text">${q.question}</p>
+                <ul class="choices-list">
+                    ${q.choices.map(choice => `
+                        <li class="choice-item">
+                            <input type="radio" id="q${idx+1}-${choice}" name="q${idx+1}" value="${choice}" class="choice-input">
+                            <label for="q${idx+1}-${choice}" class="choice-label">${choice}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+            </article>
+        `;
+        quizContainer.innerHTML += quizHTML;
+    });
+}
+
+// --- Upload automatique dès sélection ---
+fileInput.addEventListener("change", function() {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    quizContainer.innerHTML = '';
+    uploadedFileName.textContent = file.name;
+    uploadedSection.style.display = "flex";
+
+    fetch("/upload", { method: "POST", body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            uploadedSection.querySelector('small').textContent = "PDF importé avec succès";
+        } else {
+            alert("Erreur lors de l'upload");
+            uploadedSection.style.display = "none";
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de l\'upload:', error);
+        alert("Erreur réseau ou serveur lors de l'upload.");
+        uploadedSection.style.display = "none";
+    });
+});
+
+// --- Génération du quiz ---
+generateBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    const filename = uploadedFileName.textContent;
+    if (!filename) return;
+
+    generateBtn.disabled = true;
+    generateBtn.textContent = "Génération...";
+    quizContainer.innerHTML = `<p style="text-align:center;">🧠 Analyse du PDF et génération du Quiz en cours...</p>`;
+
+    fetch(`/generate/${filename}`)
+    .then(res => res.json())
+    .then(data => {
+        generateBtn.disabled = false;
+        generateBtn.textContent = "Générer le Quiz";
+
+        if (data.error) {
+            quizContainer.innerHTML = `<p style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim()};">Erreur : ${data.error}</p>`;
+        } else {
+            displayQuiz(data.quiz); // utilise directement l'objet JSON
+        }
+        quizContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+    })
+    .catch(error => {
+        console.error('Erreur lors de la génération:', error);
+        generateBtn.disabled = false;
+        generateBtn.textContent = "Générer le Quiz";
+        quizContainer.innerHTML = `<p style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim()};">Erreur réseau lors de la génération du quiz.</p>`;
+    });
+});
+</script>
+
+</body>
+</html>

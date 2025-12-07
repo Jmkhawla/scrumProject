@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz généré</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background:#f4f4f4; }
+        .question { margin-bottom: 25px; background:white; padding:15px; border-radius:10px; }
+        .question h3 { margin:0 0 10px 0; }
+        .choices li { margin-bottom:5px; }
+        .answer { margin-top:10px; font-weight:bold; color:green; }
+        a { text-decoration:none; color:#333; font-size:18px; }
+    </style>
+</head>
+<body>
+    <h1>Quiz généré pour : {{ filename }}</h1>
+
+    {% for q in questions %}
+    <div class="question">
+        <h3>{{ loop.index }}. {{ q.question }}</h3>
+        <ul class="choices">
+            {% for c in q.choices %}
+            <li>{{ c }}</li>
+            {% endfor %}
+        </ul>
+        <div class="answer">Réponse correcte : {{ q.answer }}</div>
+    </div>
+    {% endfor %}
+
+    <a href="/">← Retour</a>
+</body>
+</html>
